@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="css/specifications.css">
+	<link rel="stylesheet" type="text/css" href="./../css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./../css/specifications.css">
 </head>
 <body>
 	<nav class="navbar nav-bg-color navbar-expand-lg">
