@@ -26,8 +26,18 @@
 	}else{
 		die("Error al crear la tabla de la base de datos " . $conexion->error);
 	}
-
-
+		$sql_table2 = "CREATE TABLE IF NOT EXISTS orders_cakeshop(
+		id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		nm_clt VARCHAR(126) NOT NULL,
+		order VARCHAR(255) NOT NULL,
+		amount INT(11) NOT NULL,
+		date TIMESTAMP
+	)";
+	if ($conexion->query($sql_table2) === true) {
+		echo "Tabla creada correctamente";
+	}else{
+		die("Error al crear la tabla de la base de datos " . $conexion->error);
+	}
 
 
 
