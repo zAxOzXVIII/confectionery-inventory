@@ -9,11 +9,9 @@
 	}
 	
 		$sql = "CREATE DATABASE IF NOT EXISTS pasteleriaDB";
-		if ($conexion->query($sql) === true) {
-		echo "Base de datos creada correctamente";
-		}else if($conexion->error){
-		die("Error al crear la base de datos " . $conexion->error);
-	}
+		if($conexion->error){
+			die("Error al crear la base de datos " . $conexion->error);
+		}
 
 		$sql_table1 = "CREATE TABLE IF NOT EXISTS materials_cakeshop(
 		id INT(11) not null auto_increment PRIMARY KEY,
@@ -21,10 +19,8 @@
 		material_stock INT(11) NOT NULL,
 		date TIMESTAMP
 	)";
-	if ($conexion->query($sql_table1) === true) {
-		echo "Tabla creada correctamente";
-	}else{
-		die("Error al crear la tabla de la base de datos " . $conexion->error);
+	if($conexion->error){
+		die("Error al crear la tabla de la base de datos 1" . $conexion->error);
 	}
 		$sql_table2 = "CREATE TABLE IF NOT EXISTS orders_cakeshop(
 		id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -33,10 +29,27 @@
 		amount INT(11) NOT NULL,
 		date TIMESTAMP
 	)";
-	if ($conexion->query($sql_table2) === true) {
-		echo "Tabla creada correctamente";
-	}else{
-		die("Error al crear la tabla de la base de datos " . $conexion->error);
+	if($conexion->error){
+		die("Error al crear la tabla de la base de datos 2" . $conexion->error);
+	}
+		$sql_table3 = "CREATE TABLE IF NOT EXISTS users_cakeshop(
+		id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		user VARCHAR(32) NOT NULL,
+		password VARCHAR(32) NOT NULL,
+		email VARCHAR(56) NOT NULL
+	)";
+	if($conexion->error){
+		die("Error al crear la tabla de la base de datos 3" . $conexion->error);
+	}
+	$sql_table4 = "CREATE TABLE IF NOT EXISTS products_cakeshop(
+		id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		product VARCHAR(32) NOT NULL,
+		description VARCHAR(255) NOT NULL,
+		value INT(11) NOT NULL,
+		image VARCHAR(1000) NOT NULL
+	)";
+	if($conexion->error){
+		die("Error al crear la tabla de la base de datos 4" . $conexion->error);
 	}
 
 

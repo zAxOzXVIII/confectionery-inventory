@@ -18,7 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/specifications.css">
 </head>
 <body>
-	<div class="container wall-bg-color">
+	<div class="login-wall-bg">
 		<div class="container">
 		<div class="row">
 			
@@ -50,7 +50,7 @@
   						</div>
   						
   						<button type="submit" class="btn btn-primary">Loguear</button>
-              <a href="signup.php" class="btn btn-secondary">Ir Registro</a>
+              <a href="register.php" class="btn btn-secondary">Ir Registro</a>
 						</form>		
                
   					</div>

@@ -21,3 +21,7 @@
 	flex-wrap: wrap;
 	justify-content: space-around;
 }
+.login-wall-bg{
+ background: #E4E4E4;
+ height: 660px;
+}
