@@ -52,6 +52,6 @@
 		die("Error al crear la tabla de la base de datos 4" . $conexion->error);
 	}
 
-
+	header(Location: ./);
 
 ?>
