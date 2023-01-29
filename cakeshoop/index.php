@@ -1,6 +1,6 @@
 <?php 
 require('template/header.php');
-
+include('config/create_db.php');
 ?>
 	<h2>Pasteleria bd</h2>
 	<div class="presentacion">

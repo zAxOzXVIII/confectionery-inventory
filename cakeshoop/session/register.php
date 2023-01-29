@@ -1,13 +1,19 @@
 <?php 
-
-
-
-
-
-
-
-
-
+require('../config/db.php');
+if ($_POST) {
+  if (!empty($_POST['usuario']) && !empty($_POST['password']) && !empty($_POST['email'])) {
+   $insertar=('INSERT INTO users_cakeshop (user,password,email) VALUES (:usuario,:password,:email)');
+   $stmt = $conexion->prepare($insertar);
+   $stmt->bindParam(':usuario',$_POST['usuario']);
+   $stmt->bindParam(':password',$_POST['password']);
+   $stmt->bindParam(':email',$_POST['email']);
+   if ($stmt->execute()) {
+     $message='Se ha registrado con exito';
+   }else{
+    $message='A ocurrido un error';
+   }
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,14 +36,11 @@
     					Registro
   					</div>
   					<div class="card-body">
-  						<?php //if(isset($message)){ ?>
+  						<?php if(isset($message)){ ?>
   						<div class="alert alert-danger" role="alert">
-  							<?php //echo $message; ?>
+  							<?php echo $message; ?>
   						</div>
-
-
-
-  						<?php //} ?>
+  						<?php } ?>
   						<form method="POST" >
   						<div class="mb-3">
    						 <label  class="form-label" >Usuario</label>

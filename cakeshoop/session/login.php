@@ -1,13 +1,27 @@
 <?php 
+session_start();
+require('../config/db.php');
+if (isset($_SESSION['user_id'])) {
+  header('Location: ../admin/');
+}
 
-
-
-
-
-
-
-
-
+if ($_POST) {
+  if (!empty($_POST['usuario']) && !empty($_POST['password'])) {
+    $records = $conexion->prepare('SELECT id,user,password FROM users_cakeshop WHERE user=:usuario');
+    $records->bindParam(':usuario',$_POST['usuario']);
+    $records->execute();
+    $results = $records->fetch(PDO::FETCH_ASSOC);
+    $message='';
+    if (!empty($results)>0 && $_POST['password'] == $results['password']) {
+      $_SESSION['user_id']=$results['id'];
+      header('Location: ../admin/');
+    }else{
+      $message = 'Error al validar usuario';
+    }
+  }else{
+    $message = 'Escribe algo en los input';
+  }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,14 +44,14 @@
     					Login
   					</div>
   					<div class="card-body">
-  						<?php //if(isset($message)){ ?>
+  						<?php if(isset($message)){ ?>
   						<div class="alert alert-danger" role="alert">
-  							<?php //echo $message; ?>
+  							<?php echo $message; ?>
   						</div>
 
 
 
-  						<?php //} ?>
+  						<?php } ?>
   						<form method="POST" >
   						<div class="mb-3">
    						 <label  class="form-label" >Usuario</label>

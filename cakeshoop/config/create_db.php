@@ -25,7 +25,7 @@
 		date TIMESTAMP
 	)";
 		if ($conexion->query($sql_table1) === true) {
-			echo "Tabla creada correctamente";
+			
 		}else if($conexion->error){
 		die("Error al crear la tabla de la base de datos 1 " . $conexion->error);
 		}
@@ -65,6 +65,5 @@
 		die("Error al crear la tabla de la base de datos 4 " . $conexion->error);
 	}
 
-	header('Location: ../');
 
 ?>
