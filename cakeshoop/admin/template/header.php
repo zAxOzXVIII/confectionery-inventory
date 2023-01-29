@@ -1,8 +1,12 @@
+<?php 
+require('./../config/db.php');
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<title></title>
+	<title>Admin</title>
 	<link rel="stylesheet" type="text/css" href="./../css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="./../css/specifications.css">
 </head>
@@ -17,7 +21,8 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-link active" aria-current="page" href="#">Enlace</a>
-        <a class="nav-link active" href="#">Enlace</a>
+        <a class="nav-link active" href="./config/almacen.php">Almacen</a>
+        <a class="nav-link active" href="./config/cerrar.php">Cerrar Sesion</a>
       </div>
     </div>
 	</nav>

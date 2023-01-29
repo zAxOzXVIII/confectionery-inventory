@@ -1,10 +1,16 @@
+<?php 
+require('../../config/db.php');
+
+
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>User</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="css/specifications.css">
+	<title>Admin</title>
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../../css/specifications.css">
 </head>
 <body>
 	<nav class="navbar nav-bg-color navbar-expand-lg">
@@ -16,11 +22,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="./productos.php">Productos</a>
-        <a class="nav-link active" href="./session/login.php">Inicio de Sesion</a>
+        <a class="nav-link active" aria-current="page" href="#">Enlace</a>
+        <a class="nav-link active" href="#">Almacen</a>
+        <a class="nav-link active" href="cerrar.php">Cerrar Sesion</a>
       </div>
     </div>
 	</nav>
 	<div class="wall-bg-color">
 		<div class="container">
-			
+
+		</div>
+	</div>
+	<footer>
+		<div class="footer-bg-color">
+			<div class="footer-txt-color">
+				
+			</div>
+		</div>
+	</footer>
+<script type="text/javascript" src="../../javascript/bootstrap.js"></script>
+</body>
+</html>
