@@ -15,7 +15,8 @@ if(isset($_SESSION['user_id'])){
 }
 ?>
 
-<div style="color: red">Bienvenido <?php echo $user['user'];?></div>
+<div style="color: red"><h2>Bienvenido <?php echo $user['user'];?></h2></div>
+<div>Texto</div>
 
 <?php 
 include('template/footer.php');
