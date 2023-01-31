@@ -13,7 +13,7 @@ require('./../config/db.php');
 <body>
 	<nav class="navbar nav-bg-color navbar-expand-lg">
   		<div class="container-fluid">
-    		<span class="navbar-brand mb-0 h1">Navbar</span>
+    		<span class="navbar-brand mb-0 h1">Bon & dulce</span>
   		</div>
   		<button class="navbar-toggler nav-toggler-position position-absolute end-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
