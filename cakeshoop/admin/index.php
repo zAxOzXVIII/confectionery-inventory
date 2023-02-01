@@ -15,22 +15,23 @@ if(isset($_SESSION['user_id'])){
 }
 ?>
 
-<div style="color: red"><h2>Bienvenido <?php echo $user['user'];?></h2></div>
+<div style="color: red; text-align: center;"><h2>Bienvenido <?php echo $user['user'];?></h2></div>
 
 
 <?php 
 include('template/footer.php');
 ?>
-<div class="title_menu">
+<div class="title_menu text-center">
 	<h1>Bon & dulce</h1>
 </div>
+<div class="row align-items-start text-center">
 <!--Sector Primario-->
-<div class="sector_one">
+<div class="sector_one col">
 	<h1>Inventarios</h1>
 	<!--Inventario de materia prima-->
     <div class="record_material_inventory">
 		<label>Registrar Materia Prima</label>
-		<a href="records\records_material_inventory.php"><input type="button" value="Ir"></a>
+		<a class="btn btn-primary" href="records\records_material_inventory.php">Ir</a>
 	</div>
 	<div class="view_material_inventory">
 		<label>Ver Inventario</label>
@@ -48,7 +49,7 @@ include('template/footer.php');
 </div>
 
 <!--Segundo Sector-->
-<div class="sector_two">
+<div class="sector_two col ">
 	<h1>Ventas</h1>
 	<!--Realizar venta-->
 	<div class="new_sale">
@@ -62,10 +63,11 @@ include('template/footer.php');
 	</div>
 </div>
 <!--Sector de apartados-->
-<div class="sector_three">
+<div class="sector_three col ">
 	<h1>Apartados</h1>
 	<div class="new_reservation">
 		<label>Nuevo Apartado</label>
 		<input hreft="" type="submit">
 	</div>
+</div>
 </div>

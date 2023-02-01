@@ -22,6 +22,7 @@
 		id INT(11) not null auto_increment PRIMARY KEY,
 		material VARCHAR(255) NOT NULL,
 		material_stock INT(11) NOT NULL,
+		value INT (11) NOT NULL,
 		date TIMESTAMP
 	)";
 		if ($conexion->query($sql_table1) === true) {
@@ -54,10 +55,11 @@
 	}
 	$sql_table4 = "CREATE TABLE IF NOT EXISTS products_cakeshop(
 		id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		product VARCHAR(32) NOT NULL,
-		description VARCHAR(255) NOT NULL,
-		value INT(11) NOT NULL,
-		image VARCHAR(1000) NOT NULL
+		product VARCHAR(255) NOT NULL,
+		price_sell INT(11) NOT NULL,
+		price_buy INT(11) NOT NULL,
+		amount INT(11) NOT NULL,
+		date TIMESTAMP
 	)";
 	if ($conexion->query($sql_table4) === true) {
 
