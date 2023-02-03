@@ -25,3 +25,7 @@
  background: #E4E4E4;
  height: 660px;
 }
+div.registro_productos{
+	border: dashed #212121 2px;
+}
+
