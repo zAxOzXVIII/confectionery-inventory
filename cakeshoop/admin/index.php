@@ -11,6 +11,9 @@ if(isset($_SESSION['user_id'])){
 		$user = $results;
 	}
 }
+$sentenciaSQL= $conexion->prepare("SELECT name, number_phone, date_apartado, date_entrega, monto_cancelar, monto_cancelado, description FROM apartado_cakeshop");
+$sentenciaSQL->execute();
+$tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,22 +94,32 @@ if(isset($_SESSION['user_id'])){
 <div class="sector_three">
 	<h1>Apartados</h1>
 	<div class="new_reservation btn btn-primary">
-		<a href="" class="btn btn-primary">Crear Apartado</a>
+		<a href="apartados/apartados.php" class="btn btn-primary">Crear Apartado</a>
 	</div>
 	<div class="tabla">
-		<table border="1" class="table table-bordered">
+		<table border="1" class="table table-bordered table-dark table-striped">
 			<thead>
 				<tr>
-					<td>Nombre</td>
-					<td>Telefono</td>
-					<td>Fecha de apartado</td>
-					<td>Fecha de entrega</td>
-					<td>Monto a cancelar</td>
-					<td>Monto cancelado</td>
-					<td>Descripcion del producto</td>
+					<th>Nombre</th>
+					<th>Telefono</th>
+					<th>Fecha de apartado</th>
+					<th>Fecha de entrega</th>
+					<th>Monto a cancelar</th>
+					<th>Monto cancelado</th>
+					<th>Descripcion del producto</th>
 				</tr>
 			</thead>
-
+			<?php foreach($tablaProductos as $tabla) { ?>
+				<tr>
+					<td><?php echo $tabla['name']; ?></td>
+					<td><?php echo $tabla['number_phone']; ?></td>
+					<td><?php echo $tabla['date_apartado']; ?></td>
+					<td><?php echo $tabla['date_entrega']; ?></td>
+					<td><?php echo $tabla['monto_cancelar']; ?></td>
+					<td><?php echo $tabla['monto_cancelado']; ?></td>
+					<td><?php echo $tabla['description']; ?></td>
+				</tr>
+			<?php } ?>
 		</table>
 	</div>
 </div>
@@ -116,7 +129,7 @@ if(isset($_SESSION['user_id'])){
 	<footer>
 		<div class="footer-bg-color">
 			<div class="footer-txt-color">
-				
+				Nose
 			</div>
 		</div>
 	</footer>

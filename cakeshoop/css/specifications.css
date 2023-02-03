@@ -25,7 +25,17 @@
  background: #E4E4E4;
  height: 660px;
 }
-div.registro_productos{
-	border: dashed #212121 2px;
+.formularios-modal{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+.formularios-button{
+	background: #9d8189;
+	margin: 5px 15%;
+	border: hidden;
+}
+.formularios-button:hover{
+	background: #f4acb7;
 }
 

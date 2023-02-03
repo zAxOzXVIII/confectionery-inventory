@@ -66,6 +66,20 @@
 		}else if($conexion->error){
 		die("Error al crear la tabla de la base de datos 4 " . $conexion->error);
 	}
+	$sql_table5 = "CREATE TABLE IF NOT EXISTS apartado_cakeshop(
+		id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		name VARCHAR(42) NOT NULL,
+		number_phone VARCHAR(12) NOT NULL,
+		date_apartado DATE NOT NULL,
+		date_entrega DATE NOT NULL,
+		monto_cancelar INT(11) NOT NULL,
+		monto_cancelado INT(11) NOT NULL,
+		description VARCHAR(255) NOT NULL
+	)";
+	if ($conexion->query($sql_table5) === true) {
 
+		}else if($conexion->error){
+		die("Error al crear la tabla de la base de datos 5 " . $conexion->error);
+	}
 
 ?>
