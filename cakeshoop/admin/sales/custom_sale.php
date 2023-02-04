@@ -2,7 +2,7 @@
 require('../../config/db.php');
 	if ($_POST) {
 		if (!empty($_POST['nm_clt']) && !empty($_POST['price']) && !empty($_POST['orden'])) {
-			$SQL = $conexion->prepare('INSERT INTO orders_cakeshop (nm_clt, orden, amount) VALUES (:nm_clt, :orden, :amount)');
+			$SQL = $conexion->prepare('INSERT INTO custom_orders_cakeshop (nm_clt, orden, amount) VALUES (:nm_clt, :orden, :amount)');
 			$SQL->bindParam(':nm_clt',$_POST['nm_clt']);
 			$SQL->bindParam(':orden',$_POST['orden']);
 			$SQL->bindParam(':amount',$_POST['price']);

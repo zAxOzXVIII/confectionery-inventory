@@ -82,7 +82,7 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 	<!--Realizar venta-->
 	<div class="new_sale d-grid gap-2 col-6 mx-auto">
 		<label>Nueva venta</label>
-		<a href="" class="btn btn-primary">Registrar Venta</a>
+		<a href="sales/new_sale.php" class="btn btn-primary">Registrar Venta</a>
 	</div>
 	<!--Venta Personalizada-->
 	<div class="custom_sale d-grid gap-2 col-6 mx-auto">
