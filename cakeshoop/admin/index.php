@@ -144,7 +144,7 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 						</form>
 					</td>
 				</tr>
-			<?php } ?>
+			<?php }?>
 		</table>
 	</div>
 </div>

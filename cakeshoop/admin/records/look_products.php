@@ -7,7 +7,10 @@ $txt_prc_s = (isset($_POST['prc_vnt']))?$_POST['prc_vnt']:"";
 $txt_prc_b = (isset($_POST['prc_cmp']))?$_POST['prc_cmp']:"";
 $txt_amount = (isset($_POST['cantidad']))?$_POST['cantidad']:"";
 $txt_date = (isset($_POST['fecha']))?$_POST['fecha']:"";
-$fechaH = date("d-m-Y");
+$fechaH = date("Y-m-d H:i:s");
+
+error_reporting(E_ALL && ~E_DEPRECATED);
+ini_set("display_errors", 1);
 switch ($accion) {
 	case 'Seleccionar':
 		$sql = $conexion->prepare("SELECT * FROM products_cakeshop WHERE id=:id");
@@ -98,9 +101,9 @@ switch ($accion) {
 			<?php } ?>
 		</table>
 			</div>
-			<form method="POST" class="formularios-modal">
+			<form method="POST" class="formularios-modal" enctype="multipart/form-data">
 				<label>ID</label>
-				<input type="text" name="identificador" readonly="" value="<?php echo $id_txt; ?>">
+				<input type="text" name="id_txt" readonly="" value="<?php echo $id_txt; ?>">
 
 				<label>Nombre Producto</label>
 				<input type="text" name="producto" value="<?php echo $txt_product; ?>">
@@ -116,16 +119,17 @@ switch ($accion) {
 
 				<label>Fecha en la que se subio el producto</label>
 				<input type="text" name="fecha" readonly="" value="<?php echo $txt_date; ?>">
-
-					<input type="submit" class="my-1 btn btn-success" name="boton" value="Editar">
+				<?php if($accion!="Seleccionar"){ echo '<input type="submit" disabled="" class="my-1 btn btn-success" name="boton" value="Editar">';}else{echo '<input type="submit" class="my-1 btn btn-success" name="boton" value="Editar">';} ?>
+					
 					<input type="submit" class="my-1 btn btn-secondary" name="boton" value="Deseleccionar">
-					<?php if(isset($ex))echo $ex; ?>
+					
 			</form>
 		</div>
 	</div>
 	<footer>
 		<div class="footer-bg-color">
 			<div class="footer-txt-color">
+				<?php echo var_dump($fechaH); ?>
 			</div>
 		</div>
 	</footer>
