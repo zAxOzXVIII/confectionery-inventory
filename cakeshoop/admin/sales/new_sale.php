@@ -69,7 +69,7 @@ $listadoSQL = $requestSQL->fetchAll(PDO::FETCH_ASSOC);
 	<div class="wall-bg-color">
 		<div class="container">
             <div class="listado_venta">
-                <table>
+                <table border="1" class="table table-bordered table-dark table-striped">
                     <tr>
                         <th>
                             ID
@@ -83,6 +83,7 @@ $listadoSQL = $requestSQL->fetchAll(PDO::FETCH_ASSOC);
                         <th>
                             Cantidad
                         </th>
+                        <th>Opciones</th>
                     </tr>
                     <?php foreach ($listadoSQL as $lista) { ?>
                     <tr>
@@ -100,7 +101,7 @@ $listadoSQL = $requestSQL->fetchAll(PDO::FETCH_ASSOC);
                         </td>
                         <td>
                             <form method="POST" action="">
-                                <input type="submit" name="boton" value="Seleccionar">
+                                <input type="submit" name="boton" class="btn btn-secondary" value="Seleccionar">
                                 <input type="hidden" name="id_txt" value="<?php echo $lista['id'];  ?>"/>
                             </form>
                         </td>

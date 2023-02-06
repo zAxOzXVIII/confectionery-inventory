@@ -1,6 +1,8 @@
 <?php 
 require('../config/db.php');
 session_start();
+$accion = (isset($_POST['boton']))?$_POST['boton']:"";
+$id_txt = (isset($_POST['id_txt']))?$_POST['id_txt']:"";
 if(isset($_SESSION['user_id'])){
 	$records = $conexion->prepare("SELECT id,user FROM users_cakeshop WHERE id=:id");
 	$records->bindParam(':id',$_SESSION['user_id']);
@@ -11,7 +13,21 @@ if(isset($_SESSION['user_id'])){
 		$user = $results;
 	}
 }
-$sentenciaSQL= $conexion->prepare("SELECT name, number_phone, date_apartado, date_entrega, monto_cancelar, monto_cancelado, description FROM apartado_cakeshop");
+switch ($accion) {
+	case 'borrar':
+		$r = $conexion->prepare("SELECT id FROM apartado_cakeshop WHERE id=:id");
+		$r->bindParam(":id",$id_txt);
+		$r->execute();
+		$r = $conexion->prepare("DELETE FROM apartado_cakeshop WHERE id=:id");
+		$r->bindParam(":id",$id_txt);
+		$r->execute();
+		break;
+	
+	default:
+		# code...
+		break;
+}
+$sentenciaSQL= $conexion->prepare("SELECT id, name, number_phone, date_apartado, date_entrega, monto_cancelar, monto_cancelado, description FROM apartado_cakeshop");
 $sentenciaSQL->execute();
 $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -68,7 +84,7 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 	</div>
 		<div class="view_products_inventory d-grid gap-2 col-6 mx-auto">
 			<label>Inventario de Productos</label>
-			<a href="" class="btn btn-primary">Ver Inventario</a>
+			<a href="records/look_products.php" class="btn btn-primary">Ver Inventario</a>
 		</div>
 </div>
 <!--imagen-->
@@ -100,6 +116,7 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 		<table border="1" class="table table-bordered table-dark table-striped">
 			<thead>
 				<tr>
+					<th>ID</th>
 					<th>Nombre</th>
 					<th>Telefono</th>
 					<th>Fecha de apartado</th>
@@ -107,10 +124,12 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 					<th>Monto a cancelar</th>
 					<th>Monto cancelado</th>
 					<th>Descripcion del producto</th>
+					<th>Opciones</th>
 				</tr>
 			</thead>
 			<?php foreach($tablaProductos as $tabla) { ?>
 				<tr>
+					<td><?php echo $tabla['id']; ?></td>
 					<td><?php echo $tabla['name']; ?></td>
 					<td><?php echo $tabla['number_phone']; ?></td>
 					<td><?php echo $tabla['date_apartado']; ?></td>
@@ -118,6 +137,12 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 					<td><?php echo $tabla['monto_cancelar']; ?></td>
 					<td><?php echo $tabla['monto_cancelado']; ?></td>
 					<td><?php echo $tabla['description']; ?></td>
+					<td>
+						<form method="POST">
+							<input type="submit" name="boton" value="borrar" class="btn btn-danger">
+							<input type="hidden" name="id_txt" value="<?php echo $tabla['id']; ?>">
+						</form>
+					</td>
 				</tr>
 			<?php } ?>
 		</table>
