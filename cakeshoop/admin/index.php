@@ -36,7 +36,7 @@ switch ($accion) {
 		$r->bindParam(":name",$name);
 		$r->bindParam(":date_entrega",$date);
 		$r->bindParam(":monto_c",$monto);
-		$r->bindParam(":descr",$desc);
+		$r->bindParam(":descr",$description);
 		$r->execute();
 		header("Location: index.php");
 		break;
