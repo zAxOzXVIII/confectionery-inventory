@@ -3,6 +3,7 @@ require('../config/db.php');
 session_start();
 $accion = (isset($_POST['boton']))?$_POST['boton']:"";
 $id_txt = (isset($_POST['id_txt']))?$_POST['id_txt']:"";
+$name = (isset($_POST['nombre']))?$_POST['nombre']:"";
 if(isset($_SESSION['user_id'])){
 	$records = $conexion->prepare("SELECT id,user FROM users_cakeshop WHERE id=:id");
 	$records->bindParam(':id',$_SESSION['user_id']);
@@ -15,14 +16,23 @@ if(isset($_SESSION['user_id'])){
 }
 switch ($accion) {
 	case 'borrar':
-		$r = $conexion->prepare("SELECT id FROM apartado_cakeshop WHERE id=:id");
-		$r->bindParam(":id",$id_txt);
-		$r->execute();
 		$r = $conexion->prepare("DELETE FROM apartado_cakeshop WHERE id=:id");
 		$r->bindParam(":id",$id_txt);
 		$r->execute();
 		break;
-	
+	case 'seleccionar':
+		$r = $conexion->prepare("SELECT * FROM apartado_cakeshop WHERE id=:id");
+		$r->bindParam(":id",$id_txt);
+		$r->execute();
+		$request = $r->fetch(PDO::FETCH_ASSOC);
+		$name = $request['name'];
+		break;
+	case 'modificar':
+		$r = $conexion->prepare("UPDATE apartado_cakeshop SET name=:name WHERE id=:id");
+		$r->bindParam(":id",$id_txt);
+		$r->bindParam(":name",$name);
+		$r->execute();
+		break;
 	default:
 		# code...
 		break;
@@ -75,7 +85,7 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 	</div>
 	<div class="view_material_inventory d-grid gap-2 col-6 mx-auto">
 		<label>Inventario de materia prima</label>
-		<a href="" class="btn btn-primary">Ver Inventario</a>
+		<a href="records/custom_look_products.php" class="btn btn-primary">Ver Inventario</a>
 	</div>
 	<!--Inventario de Productos a la venta-->
 	<div class="record_products_inventory d-grid gap-2 col-6 mx-auto">
@@ -124,13 +134,21 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 					<th>Monto a cancelar</th>
 					<th>Monto cancelado</th>
 					<th>Descripcion del producto</th>
-					<th>Opciones</th>
+					<th colspan="2">Opciones</th>
 				</tr>
 			</thead>
 			<?php foreach($tablaProductos as $tabla) { ?>
 				<tr>
 					<td><?php echo $tabla['id']; ?></td>
-					<td><?php echo $tabla['name']; ?></td>
+					<td><?php if($tabla['id']!=$id_txt){
+						echo $tabla['name'];
+					}else{
+						$input_id = '<input type="text" name="nombre" value="'.$tabla["name"].'">';
+						echo $input_id;
+						echo '<input type="hidden" name="id_txt"value="'.$id_txt.'">';
+					}
+					?>
+					</td>
 					<td><?php echo $tabla['number_phone']; ?></td>
 					<td><?php echo $tabla['date_apartado']; ?></td>
 					<td><?php echo $tabla['date_entrega']; ?></td>
@@ -138,9 +156,23 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 					<td><?php echo $tabla['monto_cancelado']; ?></td>
 					<td><?php echo $tabla['description']; ?></td>
 					<td>
-						<form method="POST">
-							<input type="submit" name="boton" value="borrar" class="btn btn-danger">
-							<input type="hidden" name="id_txt" value="<?php echo $tabla['id']; ?>">
+						<form method="POST" >
+							<div class="btn-group">
+								<?php 
+								if ($accion!="seleccionar") {
+									echo '<input type="submit" name="boton" value="borrar" class="btn btn-danger">';
+								}else{
+									if ($tabla['id']==$id_txt) {
+										echo '<input type="submit" name="boton" value="modificar" class="btn btn-success">';
+									}else{
+										echo '<input type="submit" name="boton" value="borrar" class="btn btn-danger">';
+									}
+									
+								}
+								?>
+								<input type="submit" name="boton" value="seleccionar" class="btn btn-warning">
+								<input type="hidden" name="id_txt" value="<?php echo $tabla['id']; ?>">
+							</div>
 						</form>
 					</td>
 				</tr>
@@ -154,7 +186,7 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 	<footer>
 		<div class="footer-bg-color">
 			<div class="footer-txt-color">
-				Nose
+				<?php var_dump($name) ?>
 			</div>
 		</div>
 	</footer>

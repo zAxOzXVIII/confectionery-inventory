@@ -2,10 +2,9 @@
 require('../../config/db.php');
 $id_txt = (isset($_POST['id_txt']))?$_POST['id_txt']:"";
 $accion = (isset($_POST['boton']))?$_POST['boton']:"";
-$txt_product = (isset($_POST['producto']))?$_POST['producto']:"";
-$txt_prc_s = (isset($_POST['prc_vnt']))?$_POST['prc_vnt']:"";
-$txt_prc_b = (isset($_POST['prc_cmp']))?$_POST['prc_cmp']:"";
-$txt_amount = (isset($_POST['cantidad']))?$_POST['cantidad']:"";
+$txt_material = (isset($_POST['m']))?$_POST['m']:"";
+$txt_material_s = (isset($_POST['ms']))?$_POST['ms']:"";
+$txt_value = (isset($_POST['prc']))?$_POST['prc']:"";
 $txt_date = (isset($_POST['fecha']))?$_POST['fecha']:"";
 $fechaH = date("Y-m-d H:i:s");
 
@@ -13,36 +12,34 @@ error_reporting(E_ALL && ~E_DEPRECATED);
 ini_set("display_errors", 1);
 switch ($accion) {
 	case 'Seleccionar':
-		$sql = $conexion->prepare("SELECT * FROM products_cakeshop WHERE id=:id");
+		$sql = $conexion->prepare("SELECT * FROM materials_cakeshop WHERE id=:id");
 		$sql->bindParam(":id",$id_txt);
 		$sql->execute();
 		$request = $sql->fetch(PDO::FETCH_ASSOC);
-		$txt_product = $request['product'];
-		$txt_prc_b = $request['price_buy'];
-		$txt_prc_s = $request['price_sell'];
-		$txt_amount = $request['amount'];
+		$txt_material = $request['material'];
+		$txt_material_s = $request['material_stock'];
+		$txt_value = $request['value'];
 		$txt_date = $request['date'];
 		break;
 	case 'Editar':
 
-			$sql2 = $conexion->prepare("UPDATE products_cakeshop SET product=:product, price_sell=:price_sell, price_buy=:price_buy, amount=:amount, date=:date WHERE id=:id");
+			$sql2 = $conexion->prepare("UPDATE materials_cakeshop SET material=:material, material_stock=:material_stock, value=:value, date=:date WHERE id=:id");
 					 $sql2->bindParam(":id",$id_txt);
-			$sql2->bindParam(":price_sell",$txt_prc_s);
-			$sql2->bindParam(":price_buy",$txt_prc_b);
-			$sql2->bindParam(":product",$txt_product);
-			$sql2->bindParam(":amount",$txt_amount);
+			$sql2->bindParam(":material",$txt_material);
+			$sql2->bindParam(":material_stock",$txt_material_s);
+			$sql2->bindParam(":value",$txt_value);
 			$sql2->bindParam(":date",$fechaH);
 			$sql2->execute();
-			header("Location: look_products.php");
+			header("Location: custom_look_products.php");
 		break;
 	case 'Deseleccionar':
-		header("Location: look_products.php");
+		header("Location: custom_look_products.php");
 		break;
 	default:
 		# code...
 		break;
 }
-	$sentenciaSQL= $conexion->prepare("SELECT id, product, price_sell, price_buy, amount, date FROM products_cakeshop");
+	$sentenciaSQL= $conexion->prepare("SELECT * FROM materials_cakeshop");
 	$sentenciaSQL->execute();
 	$tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -77,10 +74,9 @@ switch ($accion) {
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Producto</th>
-					<th>Precio Venta</th>
-					<th>Precio Compra</th>
-					<th>Cantidad</th>
+					<th>Material</th>
+					<th>Cantidad </th>
+					<th>Precio</th>
 					<th>Fecha</th>
 					<th>Opciones</th>
 				</tr>
@@ -88,10 +84,9 @@ switch ($accion) {
 			<?php foreach($tablaProductos as $tabla) { ?>
 				<tr>
 					<td><?php echo $tabla['id']; ?></td>
-					<td><?php echo $tabla['product']; ?></td>
-					<td><?php echo $tabla['price_sell']; ?></td>
-					<td><?php echo $tabla['price_buy']; ?></td>
-					<td><?php echo $tabla['amount']; ?></td>
+					<td><?php echo $tabla['material']; ?></td>
+					<td><?php echo $tabla['material_stock']; ?></td>
+					<td><?php echo $tabla['value']; ?></td>
 					<td><?php echo $tabla['date']; ?></td>
 					<td>
 						<form method="POST">
@@ -107,17 +102,14 @@ switch ($accion) {
 				<label>ID</label>
 				<input type="text" name="id_txt" readonly="" value="<?php echo $id_txt; ?>">
 
-				<label>Nombre Producto</label>
-				<input type="text" name="producto" value="<?php echo $txt_product; ?>">
+				<label>Nombre Material</label>
+				<input type="text" name="m" value="<?php echo $txt_material; ?>">
 
-				<label>Precio Venta</label>
-				<input type="number" name="prc_vnt" value="<?php echo $txt_prc_s; ?>">
+				<label>Cantidad Material</label>
+				<input type="number" name="ms" value="<?php echo $txt_material_s; ?>">
 
-				<label>Precio Compra</label>
-				<input type="number" name="prc_cmp" value="<?php echo $txt_prc_b; ?>">
-
-				<label>Cantidad</label>
-				<input type="number" name="cantidad" value="<?php echo $txt_amount; ?>">
+				<label>Precio</label>
+				<input type="number" name="prc" value="<?php echo $txt_value; ?>">
 
 				<label>Fecha en la que se subio el producto</label>
 				<input type="text" name="fecha" readonly="" value="<?php echo $txt_date; ?>">
