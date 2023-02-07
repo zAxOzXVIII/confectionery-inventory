@@ -4,6 +4,9 @@ session_start();
 $accion = (isset($_POST['boton']))?$_POST['boton']:"";
 $id_txt = (isset($_POST['id_txt']))?$_POST['id_txt']:"";
 $name = (isset($_POST['nombre']))?$_POST['nombre']:"";
+$date = (isset($_POST['fecha']))?$_POST['fecha']:"";
+$monto = (isset($_POST['monto']))?$_POST['monto']:"";
+$description = (isset($_POST['desc']))?$_POST['desc']:"";
 if(isset($_SESSION['user_id'])){
 	$records = $conexion->prepare("SELECT id,user FROM users_cakeshop WHERE id=:id");
 	$records->bindParam(':id',$_SESSION['user_id']);
@@ -28,10 +31,18 @@ switch ($accion) {
 		$name = $request['name'];
 		break;
 	case 'modificar':
-		$r = $conexion->prepare("UPDATE apartado_cakeshop SET name=:name WHERE id=:id");
+		$r = $conexion->prepare("UPDATE apartado_cakeshop SET name=:name, date_entrega=:date_entrega, monto_cancelado=:monto_c, description=:descr WHERE id=:id");
 		$r->bindParam(":id",$id_txt);
 		$r->bindParam(":name",$name);
+		$r->bindParam(":date_entrega",$date);
+		$r->bindParam(":monto_c",$monto);
+		$r->bindParam(":descr",$desc);
 		$r->execute();
+		header("Location: index.php");
+		break;
+		case 'deseleccionar':
+		
+		header("Location: index.php");
 		break;
 	default:
 		# code...
@@ -139,38 +150,53 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 			</thead>
 			<?php foreach($tablaProductos as $tabla) { ?>
 				<tr>
+					<form method="POST" >
 					<td><?php echo $tabla['id']; ?></td>
 					<td><?php if($tabla['id']!=$id_txt){
 						echo $tabla['name'];
 					}else{
-						$input_id = '<input type="text" name="nombre" value="'.$tabla["name"].'">';
-						echo $input_id;
-						echo '<input type="hidden" name="id_txt"value="'.$id_txt.'">';
+						echo '<input type="text" id="name" name="nombre" value="'.$tabla["name"].'">';
 					}
 					?>
 					</td>
 					<td><?php echo $tabla['number_phone']; ?></td>
 					<td><?php echo $tabla['date_apartado']; ?></td>
-					<td><?php echo $tabla['date_entrega']; ?></td>
+					<td><?php if($tabla['id']!=$id_txt){
+						echo $tabla['date_entrega'];
+					}else{
+						echo '<input type="date" name="fecha" value="'.$tabla["date_entrega"].'">';
+					} ?></td>
 					<td><?php echo $tabla['monto_cancelar']; ?></td>
-					<td><?php echo $tabla['monto_cancelado']; ?></td>
-					<td><?php echo $tabla['description']; ?></td>
+					<td><?php if($tabla['id']!=$id_txt){
+						echo $tabla['monto_cancelado'];
+					}else{
+						echo '<input type="number" name="monto" value="'.$tabla["monto_cancelado"].'">';
+					} ?></td>
+					<td><?php if($tabla['id']!=$id_txt){
+						echo $tabla['description'];
+					}else{
+						echo '<input type="text" name="desc" value="'.$tabla["description"].'">';
+					} ?></td>
 					<td>
-						<form method="POST" >
+						
 							<div class="btn-group">
 								<?php 
 								if ($accion!="seleccionar") {
 									echo '<input type="submit" name="boton" value="borrar" class="btn btn-danger">';
+									echo '<input type="submit" name="boton" value="seleccionar" class="btn btn-warning">';
+
 								}else{
 									if ($tabla['id']==$id_txt) {
 										echo '<input type="submit" name="boton" value="modificar" class="btn btn-success">';
+										echo '<input type="submit" name="boton" value="deseleccionar" class="btn btn-secondary">';
 									}else{
-										echo '<input type="submit" name="boton" value="borrar" class="btn btn-danger">';
+										echo '<input type="submit" disabled="" name="boton" value="borrar" class="btn btn-danger">';
+										echo '<input type="submit" name="boton" value="seleccionar" class="btn btn-warning">';
 									}
 									
 								}
 								?>
-								<input type="submit" name="boton" value="seleccionar" class="btn btn-warning">
+								
 								<input type="hidden" name="id_txt" value="<?php echo $tabla['id']; ?>">
 							</div>
 						</form>
@@ -180,16 +206,24 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 		</table>
 	</div>
 </div>
+<div class="s-4-kal33">
+	<form method="POST">
+		<input type="hidden" name="id_txt" value="<?php echo $id_txt; ?>">
+
+		<input type="hidden" name="nombre" id="" value="<?php echo $name; ?>">
+	</form>
+</div>
 </div>
 </div>
 	</div>
 	<footer>
 		<div class="footer-bg-color">
 			<div class="footer-txt-color">
-				<?php var_dump($name) ?>
+				<?php  ?>
 			</div>
 		</div>
 	</footer>
 <script type="text/javascript" src="../js/bootstrap.js"></script>
+<script type="text/javascript" src="workshop.js"></script>
 </body>
 </html>
