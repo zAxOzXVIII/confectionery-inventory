@@ -1,18 +1,44 @@
 <?php 
 require('../../config/db.php');
-	if ($_POST) {
-		if (!empty($_POST['nm_clt']) && !empty($_POST['price']) && !empty($_POST['orden'])) {
-			$SQL = $conexion->prepare('INSERT INTO custom_orders_cakeshop (nm_clt, orden, amount) VALUES (:nm_clt, :orden, :amount)');
-			$SQL->bindParam(':nm_clt',$_POST['nm_clt']);
-			$SQL->bindParam(':orden',$_POST['orden']);
-			$SQL->bindParam(':amount',$_POST['price']);
-			$SQL->execute();
-			$c='Se envio correctamente';
-		}else{
-			$e = 'Rellenar todas las casillas';
-		}
-	}
+$id_txt = (isset($_POST['id_txt']))?$_POST['id_txt']:"";
+$accion = (isset($_POST['boton']))?$_POST['boton']:"";
+    switch ($accion) {
+        case 'Enviar':
+            if ($_POST) {
+                if (!empty($_POST['nm_clt']) && !empty($_POST['amount']) && !empty($_POST['orden']) && !empty($id_txt)) {
+                 $SQL = $conexion->prepare('INSERT INTO custom_orders_cakeshop (nm_clt, orden, amount) VALUES (:nm_clt, :orden, :amount)');
+                    $SQL->bindParam(':nm_clt',$_POST['nm_clt']);
+                    $SQL->bindParam(':orden',$_POST['orden']);
+                    $SQL->bindParam(':amount',$_POST['amount']);
+                    $SQL->execute();
+                    $c='Se envio correctamente';
+                 $quest = $conexion->prepare("SELECT id,amount FROM products_cakeshop WHERE id=:id");
+                 $quest->bindParam(':id',$id_txt);
+                 $quest->execute();
+                 $sqlquest = $quest->fetch(PDO::FETCH_ASSOC);
+                 $cambio_cantidad = $sqlquest['amount'];
+                 $cambio_cantidad-= $_POST['amount'];
+                 $quest2 = $conexion->prepare("UPDATE products_cakeshop SET amount=:amount WHERE id=:id");
+                 $quest2->bindParam(':id',$id_txt);
+                 $quest2->bindParam(':amount',$cambio_cantidad);
+                 $quest2->execute();
+                }else{
+                    $e = 'Rellenar todas las casillas';
+                }
+            }
 
+            break;
+        case 'Seleccionar':
+            $sentenciaSQL= $conexion->prepare("SELECT * FROM products_cakeshop WHERE id=:id");
+            $sentenciaSQL->bindParam(':id',$id_txt);
+            $sentenciaSQL->execute();
+            $request=$sentenciaSQL->fetch(PDO::FETCH_LAZY);
+            $id_txt = $request['id'];
+            break;
+    }
+$requestSQL = $conexion->prepare('SELECT * FROM products_cakeshop');
+$requestSQL->execute();
+$listadoSQL = $requestSQL->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -42,27 +68,71 @@ require('../../config/db.php');
 	</nav>
 	<div class="wall-bg-color">
 		<div class="container">
-<div class="Registro_productos">
-	<form method="POST">
-	 <label>Nombre</label>
+            <div class="listado_venta">
+                <table border="1" class="table table-bordered table-dark table-striped">
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Producto
+                        </th>
+                        <th>
+                            Precio Venta
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+                        <th>Opciones</th>
+                    </tr>
+                    <?php foreach ($listadoSQL as $lista) { ?>
+                    <tr>
+                        <td>
+                            <?php echo $lista['id']; ?>
+                        </td>
+                        <td>
+                            <?php echo $lista['product']; ?>
+                        </td>
+                        <td>
+                            <?php echo $lista['price_sell']; ?>
+                        </td>
+                        <td>
+                            <?php echo $lista['amount']; ?>
+                        </td>
+                        <td>
+                            <form method="POST" action="">
+                                <input type="submit" name="boton" class="btn btn-secondary" value="Seleccionar">
+                                <input type="hidden" name="id_txt" value="<?php echo $lista['id'];  ?>"/>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </table>
+                
+                <div class="Registro_productos">
+    <h2 class="py-2">Registrar venta</h2>
+    <form method="POST" class="formularios-modal">
+     <label>Identificador</label>
+     <input type="text" name="id_txt" placeholder="ID" readonly="" value="<?php echo $id_txt; ?>">
+
+     <label>Nombre</label>
      <input type="text" name="nm_clt">
 
-     <label>Precio</label>
-     <input type="number" name="price">
+     <label>Cantidad</label>
+     <input type="number" name="amount">
 
      <label>Descripcion</label>
      <input type="text" name="orden">
 
-     <input type="submit" value="Enviar">
-	</form>
-	<?php if(isset($e)){?>
-	<h5>Error: <?php echo $e;?></h5>
-	<?php }else if(isset($c)){echo $c;}?>
-</div>
-<a href="..\index.php">volver al menu</a>
-
-</div>
+    <input class='formularios-button' type='submit' name='boton' value='Enviar'>
+    </form>
+    <?php if(isset($e)){?>
+    <h5>Error: <?php echo $e;?></h5>
+    <?php }else if(isset($c)){echo $c;}?>
+                </div>
+        </div>
 	</div>
+    </div>
 	<footer>
 		<div class="footer-bg-color">
 			<div class="footer-txt-color">

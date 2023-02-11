@@ -5,7 +5,7 @@ $accion = (isset($_POST['boton']))?$_POST['boton']:"";
     switch ($accion) {
         case 'Enviar':
             if ($_POST) {
-                if (!empty($_POST['nm_clt']) && !empty($_POST['amount']) && !empty($_POST['orden'])) {
+                if (!empty($_POST['nm_clt']) && !empty($_POST['amount']) && !empty($_POST['orden']) && !empty($id_txt)) {
                  $SQL = $conexion->prepare('INSERT INTO orders_cakeshop (nm_clt, orden, amount) VALUES (:nm_clt, :orden, :amount)');
                     $SQL->bindParam(':nm_clt',$_POST['nm_clt']);
                     $SQL->bindParam(':orden',$_POST['orden']);

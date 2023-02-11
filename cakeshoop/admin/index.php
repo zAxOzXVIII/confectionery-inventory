@@ -17,6 +17,9 @@ if(isset($_SESSION['user_id'])){
 		$user = $results;
 	}
 }
+else{
+		header("Location: ../");
+	}
 switch ($accion) {
 	case 'borrar':
 		$r = $conexion->prepare("DELETE FROM apartado_cakeshop WHERE id=:id");
@@ -121,19 +124,28 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 		<label>Nueva venta</label>
 		<a href="sales/new_sale.php" class="btn btn-primary">Registrar Venta</a>
 	</div>
+	<br>
 	<!--Venta Personalizada-->
 	<div class="custom_sale d-grid gap-2 col-6 mx-auto">
 		<label>Venta Personalizada</label>
 		<a href="sales\custom_sale.php" class="btn btn-primary">Crear Venta</a>
 	</div>
+	<br>
+	<div class="view_sale d-grid gap-2 col-6 mx-auto">
+		<label>Ventas Realizadas</label>
+		<a href="sales/look_sales.php" class="btn btn-primary">Ver Ventas</a>
+	</div>
+
 </div>
 <!--Sector de apartados-->
 <div class="sector_three">
 	<h1>Apartados</h1>
+	<br>
 	<div class="new_reservation btn btn-primary">
 		<a href="apartados/apartados.php" class="btn btn-primary">Crear Apartado</a>
 	</div>
 	<div class="tabla">
+		<br>
 		<table border="1" class="table table-bordered table-dark table-striped">
 			<thead>
 				<tr>
