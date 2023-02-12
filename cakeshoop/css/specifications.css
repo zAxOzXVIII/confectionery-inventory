@@ -9,12 +9,14 @@
 }
 .footer-bg-color{
 	background: #212121;
+	/*min-height: 61px;*/
 }
 .footer-txt-color{
 	color: #EEEEEE;
 }
 .wall-bg-color{
 	background: #ffe5d9;
+	min-height: 88vh;
 }
 .presentacion{
 	display: flex;
@@ -56,5 +58,10 @@
 	height: auto;
 	background: #434343;
 	color: #EEEEEE;
+}
+.iconos{
+	fill: #EEEEEE !important;
+	display: grid;
+	justify-items: center;
 }
 

@@ -1,6 +1,20 @@
 <?php 
 require('../../config/db.php');
 
+$boton = (!empty($_POST['boton']))?$_POST['boton']:"";
+$fecha = (!empty($_POST['fecha']))?$_POST['fecha']:"";
+
+if (isset($fecha)) {
+	$sql = $conexion->prepare("SELECT * FROM ganancias_cakeshop WHERE fecha=:fecha");
+	$sql->bindParam(":fecha",$fecha);
+	$sql->execute();
+	$rowC=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+if (empty($rowC)) {
+	$e="<span style='color:#E20000;'>No se Encontraron Parecidos</span>";	
+}
+
+
 $sql = $conexion->prepare('SELECT * FROM ganancias_cakeshop');
 $sql->execute();
 $row=$sql->fetchAll(PDO::FETCH_ASSOC);
@@ -32,9 +46,10 @@ $row=$sql->fetchAll(PDO::FETCH_ASSOC);
 	</nav>
 	<div class="wall-bg-color">
 		<div class="container">
-			<table border="1" >
+			<table border="1" class="table table-striped table-dark table-bordered">
 				<tr>
 					<th>ID</th>
+					<th>CLIENTE</th>
 					<th>GANANCIA NETA</th>
 					<th>GANANCIA BRUTA</th>
 					<th>CANTIDAD</th>
@@ -45,6 +60,7 @@ $row=$sql->fetchAll(PDO::FETCH_ASSOC);
 				<tr>
 					
 					<td><?php echo $key['id']; ?></td>
+					<th><?php echo $key['cliente']; ?></th>
 					<td><?php echo $key['ganancia_neta']; ?></td>
 					<td><?php echo $key['ganancia_bruta']; ?></td>
 					<td><?php echo $key['cantidas']; ?></td>
@@ -53,12 +69,49 @@ $row=$sql->fetchAll(PDO::FETCH_ASSOC);
 				</tr>
 				<?php } ?>
 			</table>
+			<div class="">
+				<form method="POST">
+					<label>Buscar Fecha</label>
+					<input type="date" name="fecha">
+
+					<input type="submit" name="boton">
+				</form>
+				<?php if(isset($e)){echo $e;}
+				else{ ?>
+				<table border="1" class="table table-striped table-dark table-bordered">
+				<tr>
+					<th>ID</th>
+					<th>CLIENTE</th>
+					<th>GANANCIA NETA</th>
+					<th>GANANCIA BRUTA</th>
+					<th>CANTIDAD</th>
+					<th>FECHA</th>
+				</tr>
+					<?php foreach ($rowC as $keyC) {
+					 ?>
+				<tr>
+					
+					<td><?php echo $keyC['id']; ?></td>
+					<th><?php echo $keyC['cliente']; ?></th>
+					<td><?php echo $keyC['ganancia_neta']; ?></td>
+					<td><?php echo $keyC['ganancia_bruta']; ?></td>
+					<td><?php echo $keyC['cantidas']; ?></td>
+					<td><?php echo $keyC['fecha']; ?></td>
+					
+				</tr>
+				<?php } 
+			}
+				?>
+				</table>
+			</div>
 		</div>
 	</div>
 	<footer>
 		<div class="footer-bg-color">
 			<div class="footer-txt-color">
-				
+				<?php  
+					
+				?>
 			</div>
 		</div>
 	</footer>

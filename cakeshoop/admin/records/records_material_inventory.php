@@ -42,7 +42,7 @@ require('../../config/db.php');
 <div class="mb-3">
 	<div class="Registro_materia_prima">
 	<h1>Registrar Materia Prima</h1>
-	<form method="POST">
+	<form method="POST" class="formularios-modal">
 	 <label class="form-label">Producto</label>
 	 <input type="text" name="material">
 
@@ -52,7 +52,7 @@ require('../../config/db.php');
 	 <label>Cantidad</label>
 	 <input type="number" name="amount">
 
- 	 <input type="submit" value="Enviar">
+ 	 <input type="submit" value="Enviar" class="formularios-button">
 	</form>
 	<?php if(isset($e)){?>
 	<h5>Error: <?php echo $e;?></h5>
@@ -61,7 +61,6 @@ require('../../config/db.php');
 
 
 </div>
-<a href="..\index.php">volver al menu</a>
 <!-- falta por decorar -->
 
 </div>

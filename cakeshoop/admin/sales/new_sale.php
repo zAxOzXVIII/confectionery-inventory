@@ -24,17 +24,19 @@ $fecha=date("Y-m-d H:i:s");
                  $cambio_cantidad-= $_POST['amount'];
                  $ganancia_neta=($sqlquest['price_sell']-$sqlquest['price_buy'])*$cantidad;
                  $ganancia_bruta=$sqlquest['price_sell']*$cantidad;
+                 $cliente=$_POST['nm_clt'];
 
                  $quest2 = $conexion->prepare("UPDATE products_cakeshop SET amount=:amount WHERE id=:id");
                  $quest2->bindParam(':id',$id_txt);
                  $quest2->bindParam(':amount',$cambio_cantidad);
                  $quest2->execute();
 
-                 $SQL = $conexion->prepare('INSERT INTO ganancias_cakeshop (cantidas,ganancia_bruta,ganancia_neta,fecha) VALUES (:cantidas,:ganancia_bruta,:ganancia_neta,:fecha)');
+                 $SQL = $conexion->prepare('INSERT INTO ganancias_cakeshop (cantidas,ganancia_bruta,ganancia_neta,fecha,cliente) VALUES (:cantidas,:ganancia_bruta,:ganancia_neta,:fecha,:cliente)');
                  $SQL->bindParam(':cantidas',$cantidad);
                  $SQL->bindParam(':ganancia_bruta',$ganancia_bruta);
                  $SQL->bindParam(':ganancia_neta',$ganancia_neta);
                  $SQL->bindParam(':fecha',$fecha);
+                 $SQL->bindParam(':cliente',$cliente);
                  $SQL->execute();
 
 

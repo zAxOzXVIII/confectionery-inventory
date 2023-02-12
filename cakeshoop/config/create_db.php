@@ -98,6 +98,7 @@
 		ganancia_neta INT(11) NOT NULL,
 		ganancia_bruta INT(11) NOT NULL,
 		cantidas INT(11) NOT NULL,
+		cliente VARCHAR(26) NOT NULL,
 		fecha DATE
 	)";
 		if ($conexion->query($sql_table7) === true) {

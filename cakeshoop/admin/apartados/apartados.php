@@ -1,14 +1,16 @@
 <?php 
 require('../../config/db.php');
+$fecha = (isset($_POST['date_apartado']))?$_POST['date_apartado']:date("Y-m-d");
+$monto_cancelado = (isset($_POST['monto_cancelado']))?$_POST['monto_cancelado']:"";
 	if ($_POST) {
-		if (!empty($_POST['name']) && !empty($_POST['number_phone']) && !empty($_POST['date_apartado']) && !empty($_POST['date_entrega']) && !empty($_POST['monto_cancelar']) && !empty($_POST['monto_cancelado']) && !empty($_POST['description'])) {
+		if (!empty($_POST['name']) && !empty($_POST['number_phone']) && isset($fecha) && !empty($_POST['date_entrega']) && !empty($_POST['monto_cancelar']) && isset($monto_cancelado) && !empty($_POST['description'])) {
 			$SQL = $conexion->prepare('INSERT INTO apartado_cakeshop (name, number_phone, date_apartado, date_entrega, monto_cancelar, monto_cancelado, description) VALUES (:name, :number_phone, :date_apartado, :date_entrega, :monto_cancelar, :monto_cancelado, :description)');
 			$SQL->bindParam(':name',$_POST['name']);
 			$SQL->bindParam(':number_phone',$_POST['number_phone']);
 			$SQL->bindParam(':date_entrega',$_POST['date_entrega']);
-			$SQL->bindParam(':date_apartado',$_POST['date_apartado']);
+			$SQL->bindParam(':date_apartado',$fecha);
 			$SQL->bindParam(':monto_cancelar',$_POST['monto_cancelar']);
-			$SQL->bindParam(':monto_cancelado',$_POST['monto_cancelado']);
+			$SQL->bindParam(':monto_cancelado',$monto_cancelado);
 			$SQL->bindParam(':description',$_POST['description']);
 			$SQL->execute();
 			$c='Se envio correctamente';
@@ -86,7 +88,7 @@ require('../../config/db.php');
 	<footer>
 		<div class="footer-bg-color">
 			<div class="footer-txt-color">
-				
+				<?php echo var_dump($fecha); ?>
 			</div>
 		</div>
 	</footer>

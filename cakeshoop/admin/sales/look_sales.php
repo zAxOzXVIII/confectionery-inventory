@@ -38,7 +38,7 @@ $tabla2 = $sqlRequest1->fetchAll(PDO::FETCH_ASSOC);
 	<div class="wall-bg-color">
 		<div class="container">
             
-            <table class="table table-striped">
+            <table class="table table-striped table-dark table-bordered">
             <?php echo"<h2>Tabla de Ventas</h2>";?>
                 <thead>
                     <tr>
@@ -69,7 +69,7 @@ $tabla2 = $sqlRequest1->fetchAll(PDO::FETCH_ASSOC);
             </table>
             
             
-            <table class="table table-striped">
+            <table class="table table-striped table-dark table-bordered">
             <?php echo"<h2>Tabla de ventas personalizadas</h2>";?>
             <thead>
                     <tr>

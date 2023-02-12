@@ -42,7 +42,7 @@ require('../../config/db.php');
 		<div class="container">
 <div class="registro_productos">
     <h1>Registrar Productos</h1>
-    <form method="POST">
+    <form method="POST" class="formularios-modal">
      <label>Nombre</label>
      <input type="text" name="name">
 
@@ -55,13 +55,13 @@ require('../../config/db.php');
      <label>Cantidad</label>
      <input type="number" name="amount">
 
-     <input type="submit" value="Enviar">
+     <input type="submit" value="Enviar" class="formularios-button">
     </form>
     <?php if(isset($e)){?>
     <h5>Error: <?php echo $e;?></h5>
     <?php }else if(isset($c)){echo $c;}?>
 </div>
-<a href="..\index.php">volver al menu</a>
+
 
 </div>
 	</div>

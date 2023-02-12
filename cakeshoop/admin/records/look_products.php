@@ -131,7 +131,7 @@ switch ($accion) {
 	<footer>
 		<div class="footer-bg-color">
 			<div class="footer-txt-color">
-				<?php echo var_dump($fechaH); ?>
+				<?php  ?>
 			</div>
 		</div>
 	</footer>
