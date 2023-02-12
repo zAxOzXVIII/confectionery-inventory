@@ -167,7 +167,7 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 					<td><?php if($tabla['id']!=$id_txt){
 						echo $tabla['name'];
 					}else{
-						echo '<input type="text" id="name" name="nombre" value="'.$tabla["name"].'">';
+						echo '<input type="text" id="name" name="nombre" class="input_style_text" value="'.$tabla["name"].'">';
 					}
 					?>
 					</td>
@@ -176,18 +176,18 @@ $tablaProductos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 					<td><?php if($tabla['id']!=$id_txt){
 						echo $tabla['date_entrega'];
 					}else{
-						echo '<input type="date" name="fecha" value="'.$tabla["date_entrega"].'">';
+						echo '<input type="date" name="fecha" class="input_style_date" value="'.$tabla["date_entrega"].'">';
 					} ?></td>
 					<td><?php echo $tabla['monto_cancelar']; ?></td>
 					<td><?php if($tabla['id']!=$id_txt){
 						echo $tabla['monto_cancelado'];
 					}else{
-						echo '<input type="number" name="monto" value="'.$tabla["monto_cancelado"].'">';
+						echo '<input type="number" name="monto" class="input_style_number" value="'.$tabla["monto_cancelado"].'">';
 					} ?></td>
 					<td><?php if($tabla['id']!=$id_txt){
 						echo $tabla['description'];
 					}else{
-						echo '<input type="text" name="desc" value="'.$tabla["description"].'">';
+						echo '<input type="text" name="desc" class="input_style_text" value="'.$tabla["description"].'">';
 					} ?></td>
 					<td>
 						

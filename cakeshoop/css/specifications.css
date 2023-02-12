@@ -38,8 +38,23 @@
 .formularios-button:hover{
 	background: #f4acb7;
 }
-.tabla{
-	
-	
+.input_style_text{
+	width: 130px;
+	height: auto;
+	background: #434343;
+	color: #EEEEEE;
+	white-space: initial;
+}
+.input_style_date{
+	width: 110px;
+	height: auto;
+	background: #434343;
+	color: #EEEEEE;
+}
+.input_style_number{
+	width: 80px;
+	height: auto;
+	background: #434343;
+	color: #EEEEEE;
 }
 

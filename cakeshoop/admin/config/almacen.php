@@ -1,7 +1,9 @@
 <?php 
 require('../../config/db.php');
 
-
+$sql = $conexion->prepare('SELECT * FROM ganancias_cakeshop');
+$sql->execute();
+$row=$sql->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -30,7 +32,27 @@ require('../../config/db.php');
 	</nav>
 	<div class="wall-bg-color">
 		<div class="container">
-
+			<table border="1" >
+				<tr>
+					<th>ID</th>
+					<th>GANANCIA NETA</th>
+					<th>GANANCIA BRUTA</th>
+					<th>CANTIDAD</th>
+					<th>FECHA</th>
+				</tr>
+				<?php foreach ($row as $key) {
+					 ?>
+				<tr>
+					
+					<td><?php echo $key['id']; ?></td>
+					<td><?php echo $key['ganancia_neta']; ?></td>
+					<td><?php echo $key['ganancia_bruta']; ?></td>
+					<td><?php echo $key['cantidas']; ?></td>
+					<td><?php echo $key['fecha']; ?></td>
+					
+				</tr>
+				<?php } ?>
+			</table>
 		</div>
 	</div>
 	<footer>

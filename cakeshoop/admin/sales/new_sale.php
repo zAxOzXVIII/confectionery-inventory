@@ -2,6 +2,7 @@
 require('../../config/db.php');
 $id_txt = (isset($_POST['id_txt']))?$_POST['id_txt']:"";
 $accion = (isset($_POST['boton']))?$_POST['boton']:"";
+$fecha=date("Y-m-d H:i:s");
     switch ($accion) {
         case 'Enviar':
             if ($_POST) {
@@ -12,16 +13,31 @@ $accion = (isset($_POST['boton']))?$_POST['boton']:"";
                     $SQL->bindParam(':amount',$_POST['amount']);
                     $SQL->execute();
                     $c='Se envio correctamente';
-                 $quest = $conexion->prepare("SELECT id,amount FROM products_cakeshop WHERE id=:id");
+
+                 $quest = $conexion->prepare("SELECT id,amount,price_sell,price_buy FROM products_cakeshop WHERE id=:id");
                  $quest->bindParam(':id',$id_txt);
                  $quest->execute();
                  $sqlquest = $quest->fetch(PDO::FETCH_ASSOC);
+
+                 $cantidad=$_POST['amount'];
                  $cambio_cantidad = $sqlquest['amount'];
                  $cambio_cantidad-= $_POST['amount'];
+                 $ganancia_neta=($sqlquest['price_sell']-$sqlquest['price_buy'])*$cantidad;
+                 $ganancia_bruta=$sqlquest['price_sell']*$cantidad;
+
                  $quest2 = $conexion->prepare("UPDATE products_cakeshop SET amount=:amount WHERE id=:id");
                  $quest2->bindParam(':id',$id_txt);
                  $quest2->bindParam(':amount',$cambio_cantidad);
                  $quest2->execute();
+
+                 $SQL = $conexion->prepare('INSERT INTO ganancias_cakeshop (cantidas,ganancia_bruta,ganancia_neta,fecha) VALUES (:cantidas,:ganancia_bruta,:ganancia_neta,:fecha)');
+                 $SQL->bindParam(':cantidas',$cantidad);
+                 $SQL->bindParam(':ganancia_bruta',$ganancia_bruta);
+                 $SQL->bindParam(':ganancia_neta',$ganancia_neta);
+                 $SQL->bindParam(':fecha',$fecha);
+                 $SQL->execute();
+
+
                 }else{
                     $e = 'Rellenar todas las casillas';
                 }
